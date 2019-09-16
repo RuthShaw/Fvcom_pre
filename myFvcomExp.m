@@ -3,29 +3,29 @@ close all
 clc
 
 %% basic infomation 
-%????????????
+% <encoding name=??GBK??> 
 global ftbverbose caseInfo
 
 ftbverbose = 1; % be noisy
 
-%????or????
-caseInfo.casename = 'fujian';
+% 输入项目名
+caseInfo.casename = 'cockburn';
     % Model time ([Y,M,D,h,m,s])
+
 caseInfo.timezone = 0;
-caseInfo.modelYear = 2010;
-caseInfo.startDate = [caseInfo.modelYear,8,01,00,00,00];
-caseInfo.endDate = [caseInfo.modelYear,10,1,00,00,00];
-caseInfo.lat = [20.3,28.1];caseInfo.lon = [116.8,125.2];
-    %????????
+% 输入模式所需时间
+caseInfo.modelYear = 2016;
+caseInfo.startDate = [caseInfo.modelYear,1,01,00,00,00];
+caseInfo.endDate = [caseInfo.modelYear+2,1,1,00,00,00];
+% 输入模式所需经纬度范围
+caseInfo.lat = [-34,-30];caseInfo.lon = [113.5,116];
 caseInfo.basedir = pwd;
 
 
-%????
-    %????????
 caseInfo.startDateUTC = datevec(datenum(caseInfo.startDate)-caseInfo.timezone/24);
 caseInfo.endDateUTC = datevec(datenum(caseInfo.endDate)-caseInfo.timezone/24);
 
-%????????????????
+% 添加需要用到的程序包
 addpath(fullfile(pwd,'utility'))
 if isunix       % Unix?
     addpath('/Users/ruthshaw/Documents/MATLAB/toolbox/fvcom-toolbox-master2/fvcom-toolbox-master/utilities')
@@ -34,11 +34,16 @@ if isunix       % Unix?
     addpath('/Users/ruthshaw/Documents/MATLAB/toolbox/m_map')
     caseInfo.obc_tides.dirTMD = '/Users/ruthshaw/Documents/MATLAB/toolbox/tmd_toolbox';
 else     % Or Windows?
+%     下载地址为：https://github.com/pwcazenave/fvcom-toolbox
     addpath('F:/Atherine/toolbox/fvcom-toolbox-master2/fvcom-toolbox-master/utilities')
     addpath('F:/Atherine/toolbox/fvcom-toolbox-master2/fvcom-toolbox-master/fvcom_prepro/')
+    %这个包好像没用到
+%     下载地址为：https://github.com/sea-mat/air-sea
     addpath('F:/Atherine/toolbox/air_sea/')
+%   下载地址为：https://www.eoas.ubc.ca/~rich/map.html
     addpath('F:/Atherine/toolbox/m_map')
-    caseInfo.obc_tides.dirTMD = 'F:/Atherine/toolbox/tmd_toolbox/';   % Insert your mapped drive to \\store\login\your_name here
+%    下载地址为： https://www.esr.org/research/polar-tide-models/tmd-software/
+    caseInfo.obc_tides.dirTMD = 'F:/Atherine/toolbox/tmd_toolbox/';   
 end
 
 addpath(caseInfo.obc_tides.dirTMD)
